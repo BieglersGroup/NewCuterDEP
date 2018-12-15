@@ -1,0 +1,3 @@
+linear_solver ma97
+output_file output.out
+file_print_level 12

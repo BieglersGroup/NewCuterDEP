@@ -1,0 +1,3 @@
+option presolve 0;
+model blockqp3.mod;
+write bblockqp3;
