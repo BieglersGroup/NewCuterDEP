@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 from __future__ import print_function
+
 import re
-import numpy as np
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 __author__ = "David Thierry"  #: @2018
 
@@ -13,10 +15,10 @@ def main():
     cpumax = 3600000
     fmax = 1e+40
 
-    res4 = "0103/resto4_timings.txt"
-    res1 = "0103/resto1_timings.txt"
-    van0 = "0103/vanilla0_timings.txt"
-    van1 = "0103/vanilla1_timings.txt"
+    res4 = "0107_orig/resto4_timings.txt"
+    res1 = "0107_orig/resto1_timings.txt"
+    van0 = "0107_orig/vanilla0_timings.txt"
+    van1 = "0107_orig/vanilla1_timings.txt"
     rfl = [res4, van0, van1, res1]
     iter_dict = dict()
     cpus_dict = dict()
@@ -100,6 +102,7 @@ def main():
         it_min = min(it_list)
         cpu_min = np.min(cpu_list)
         f_min = np.min(f_list)
+        print(i, f_list, f_min)
         for k in range(0, solver):  #: look for the minimum
             if it_list[k] == it_min:
                 break
@@ -138,7 +141,7 @@ def main():
     plt.legend()
     plt.annotate('r_max(it): ' + str(r_it_max), xy=(0.05, 0.95), xycoords='axes fraction')
     # plt.show()
-    plt.savefig('it_prof.png', dpi=500)
+    plt.savefig('it_prof_o.png', dpi=500)
 
     plt.figure("two")
     r_cpu_max = np.max(r_cpu.values())
@@ -148,12 +151,12 @@ def main():
         for t in np.linspace(1, 1e+6):
             rho_.append(rho(s, t, prob, r_cpu))
             # tau_.append(t)
-            tau_.append(np.log10(t))
+            tau_.append(t)
         plt.plot(tau_, rho_, label=rfl[s])
     plt.legend()
     plt.annotate('r_max(cpu): ' + str(r_cpu_max), xy=(0.05, 0.05), xycoords='axes fraction')
 
-    plt.savefig('cpu_prof.png', dpi=500)
+    plt.savefig('cpu_prof_o.png', dpi=500)
 
     plt.figure("three")
     r_f_max = np.max(r_f.values())
@@ -162,12 +165,12 @@ def main():
         tau_ = []
         for t in np.linspace(1, 1e+6):
             rho_.append(rho(s, t, prob, r_f))
-            tau_.append(np.log10(t))
+            tau_.append(t)
         plt.plot(tau_, rho_, label=rfl[s])
     plt.legend()
     plt.annotate('r_max(f): ' + str(r_f_max), xy=(0.05, 0.05), xycoords='axes fraction')
     # plt.show()
-    plt.savefig('f_prof.png', dpi=500)
+    plt.savefig('f_prof_o.png', dpi=500)
 
 
 def rho(solver, tau, problem_set, r):
